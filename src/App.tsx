@@ -1,25 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import WalletContextProvider from './Components/WalletContextProvider';
+import WalletConnect from './Components/WalletConnect';
+import WifiMap from './Components/WifiMap/WifiMap';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WalletContextProvider>
+      <div className="App">
+        {/* <h1>Добро пожаловать в Nodira</h1> */}
+        {/* <WalletConnect /> */}
+        <WifiMap />
+      </div>
+    </WalletContextProvider>
   );
 }
 
