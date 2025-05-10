@@ -177,7 +177,7 @@ export default function WifiMap() {
         <LocateButton onLocate={(lat, lng) => setUserLocation([lat, lng])}/>
 
         {pins.map((pin, idx) => (
-          <Marker key={idx} position={[pin.lat, pin.lng]}>
+          <Marker key={idx} position={[pin.lat, pin.lng]} icon={customWifiIcon}>
             <Popup>
               <strong>{pin.name}</strong>
               <br />
@@ -201,7 +201,7 @@ export default function WifiMap() {
         ))}
 
 {newPinCoords && (
-          <Marker position={[newPinCoords.lat, newPinCoords.lng]}>
+          <Marker position={[newPinCoords.lat, newPinCoords.lng]} icon={customWifiIcon}>
             <Popup>
               <form onSubmit={handleFormSubmit} className={styles.form}>
                 <input
