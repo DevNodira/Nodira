@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# Nodira
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Nodira** is a decentralized platform where users share Wi-Fi access points and earn tokens when others connect. It promotes decentralized internet access while rewarding contributors.
+The app offers a public Wi-Fi map, connection via QR codes, and router setup instructions. The backend includes NFT-based routers, a smart connection tracker, and a DAO for node reviews.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- **Interactive Map** — Pin Wi-Fi hotspots and share details with others.
+- **Pay-to-Access** — Unlock Wi-Fi information by paying a small SOL fee.
+- **Solana + Phantom Wallet Integration** — Secure and fast payments via Phantom.
+- **User Geolocation Support** — Center the map on your current location.
+- **Clean Wallet UI** — Connect, view balance, and manage your identity.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- **Frontend**: React + Vite + TypeScript
+- **Styling**: CSS Modules
+- **Blockchain**: Solana, Phantom Wallet Adapter
+- **Mapping**: Leaflet.js + React Leaflet
+- **Backend (planned)**: Supabase / Solana smart contracts
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# 1. Clone the repo
+git clone https://github.com/DevNodira/Nodira.git
+cd Nodira
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 2. Install dependencies
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 3. Run the app
+npm run dev
+```
+## Usage
 
-### `npm run eject`
+- Add Wi-Fi Pin: Click on the map → Fill in Wi-Fi name & description → Submit.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Purchase Access: Click on a pin → If locked, pay small SOL fee → Unlock info.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Connect Wallet: Use profile icon in top-right to connect your Phantom wallet.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Check Balance: Your wallet balance is displayed in the dropdown.
