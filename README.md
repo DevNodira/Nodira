@@ -1,54 +1,49 @@
-# React + TypeScript + Vite
+# Nodira
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Nodira** is a decentralized platform where users share Wi-Fi access points and earn tokens when others connect. It promotes decentralized internet access while rewarding contributors.
+The app offers a public Wi-Fi map, connection via QR codes, and router setup instructions. The backend includes NFT-based routers, a smart connection tracker, and a DAO for node reviews.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- **Interactive Map** — Pin Wi-Fi hotspots and share details with others.
+- **Pay-to-Access** — Unlock Wi-Fi information by paying a small SOL fee.
+- **Solana + Phantom Wallet Integration** — Secure and fast payments via Phantom.
+- **User Geolocation Support** — Center the map on your current location.
+- **Clean Wallet UI** — Connect, view balance, and manage your identity.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Tech Stack
+
+- **Frontend**: React + Vite + TypeScript
+- **Styling**: CSS Modules
+- **Blockchain**: Solana, Phantom Wallet Adapter
+- **Mapping**: Leaflet.js + React Leaflet
+- **Backend (planned)**: Supabase / Solana smart contracts
+
+---
+
+## Installation
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/DevNodira/Nodira.git
+cd Nodira
+
+# 2. Install dependencies
+npm install
+
+# 3. Run the app
+npm run dev
 ```
+## Usage
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Add Wi-Fi Pin: Click on the map → Fill in Wi-Fi name & description → Submit.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Purchase Access: Click on a pin → If locked, pay small SOL fee → Unlock info.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- Connect Wallet: Use profile icon in top-right to connect your Phantom wallet.
+
+- Check Balance: Your wallet balance is displayed in the dropdown.

@@ -6,7 +6,7 @@ import { Connection } from '@solana/web3.js';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import styles from './Header.module.css';
 
-const connection = new Connection('https://api.mainnet-beta.solana.com');
+const connection = new Connection('https://api.devnet.solana.com');
 
 export default function WalletDropdown() {
   const { publicKey, connected, disconnect } = useWallet();
