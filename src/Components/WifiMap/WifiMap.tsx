@@ -22,6 +22,13 @@ L.Icon.Default.mergeOptions({
     iconAnchor: [16, 32], 
     popupAnchor: [0, -32], 
   });
+
+  const userIcon = new L.Icon({
+  iconUrl: '/userIcon.svg',
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
   
 
   type WifiPoint = {
@@ -90,6 +97,10 @@ export default function WifiMap() {
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {
+        const target = (e.originalEvent as MouseEvent).target as HTMLElement;
+          if (target.closest(`.${styles.locateButton}`)) {
+            return;
+        }
         setNewPinCoords({ lat: e.latlng.lat, lng: e.latlng.lng });
       },
     });
@@ -171,10 +182,19 @@ export default function WifiMap() {
 
   return (
     <div className={styles.mapWrapper}>
+
       <MapContainer center={[51.505, -0.09]} zoom={150} className={styles.map} whenCreated={(map: any) => (mapRef.current = map)}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapClickHandler />
         <LocateButton onLocate={(lat, lng) => setUserLocation([lat, lng])}/>
+
+        {userLocation && (
+          <Marker position={userLocation} icon={userIcon}>
+            <Popup>
+              👤 You are here
+            </Popup>
+          </Marker>
+        )}
 
         {pins.map((pin, idx) => (
           <Marker key={idx} position={[pin.lat, pin.lng]} icon={customWifiIcon}>
