@@ -183,7 +183,12 @@ export default function WifiMap() {
   return (
     <div className={styles.mapWrapper}>
 
-      <MapContainer center={[51.505, -0.09]} zoom={150} className={styles.map} whenCreated={(map: any) => (mapRef.current = map)}>
+      <MapContainer
+        center={[51.505, -0.09]}
+        zoom={15}
+        className={styles.map}
+        ref={mapRef} // ✅
+      >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapClickHandler />
         <LocateButton onLocate={(lat, lng) => setUserLocation([lat, lng])}/>
