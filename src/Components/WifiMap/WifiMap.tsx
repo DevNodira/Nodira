@@ -41,6 +41,10 @@ L.Icon.Default.mergeOptions({
     password: string;
   };
 
+  type WifiMapProps = {
+    showOnlyUnlocked: boolean;
+  };
+
 function LocateButton({ onLocate }: { onLocate: (lat: number, lng: number) => void }) {
   const map = useMap();
 
@@ -70,7 +74,7 @@ function LocateButton({ onLocate }: { onLocate: (lat: number, lng: number) => vo
   );
 }
 
-export default function WifiMap() {
+export default function WifiMap({showOnlyUnlocked }: WifiMapProps) {
   const [pins, setPins] = useState<WifiPoint[]>([]);
   const [newPinCoords, setNewPinCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [formState, setFormState] = useState({
@@ -83,6 +87,7 @@ export default function WifiMap() {
   const [userLocation, setUserLocation] = useState<[number, number] | undefined>();
   const [unlockedPins, setUnlockedPins] = useState<number[]>([]);
   const mapRef = useRef<any>(null);
+
 
   useEffect(() => {
     const stored = localStorage.getItem('unlockedPins');
@@ -181,27 +186,29 @@ export default function WifiMap() {
   };
 
   return (
-    <div className={styles.mapWrapper}>
+  <div className={styles.mapWrapper}>
+    <MapContainer
+      center={[51.505, -0.09]}
+      zoom={15}
+      className={styles.map}
+      ref={mapRef}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <MapClickHandler />
+      <LocateButton onLocate={(lat, lng) => setUserLocation([lat, lng])} />
 
-      <MapContainer
-        center={[51.505, -0.09]}
-        zoom={15}
-        className={styles.map}
-        ref={mapRef} // ✅
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MapClickHandler />
-        <LocateButton onLocate={(lat, lng) => setUserLocation([lat, lng])}/>
+      {userLocation && (
+        <Marker position={userLocation} icon={userIcon}>
+          <Popup>👤 You are here</Popup>
+        </Marker>
+      )}
 
-        {userLocation && (
-          <Marker position={userLocation} icon={userIcon}>
-            <Popup>
-              👤 You are here
-            </Popup>
-          </Marker>
-        )}
+      {pins.map((pin, idx) => {
+        if (showOnlyUnlocked && !unlockedPins.includes(idx)) {
+          return null;
+        }
 
-        {pins.map((pin, idx) => (
+        return (
           <Marker key={idx} position={[pin.lat, pin.lng]} icon={customWifiIcon}>
             <Popup>
               <strong>{pin.name}</strong>
@@ -223,52 +230,53 @@ export default function WifiMap() {
               )}
             </Popup>
           </Marker>
-        ))}
+        );
+      })}
 
-{newPinCoords && (
-          <Marker position={[newPinCoords.lat, newPinCoords.lng]} icon={customWifiIcon}>
-            <Popup>
-              <form onSubmit={handleFormSubmit} className={styles.form}>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={formState.name}
-                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  required
-                />
-                <textarea
-                  placeholder="Description"
-                  value={formState.description}
-                  onChange={(e) => setFormState({ ...formState, description: e.target.value })}
-                />
-                <input
-                  type="text"
-                  placeholder="SSID"
-                  value={formState.ssid}
-                  onChange={(e) => setFormState({ ...formState, ssid: e.target.value })}
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Password"
-                  value={formState.password}
-                  onChange={(e) => setFormState({ ...formState, password: e.target.value })}
-                  required
-                />
-                <input
-                  type="number"
-                  placeholder="Price (SOL)"
-                  value={formState.price}
-                  onChange={(e) => setFormState({ ...formState, price: e.target.value })}
-                  required
-                />
-                <button type="submit">Add Wi-Fi</button>
-              </form>
-            </Popup>
-          </Marker>
-        )}
-      </MapContainer>
-    </div>
+      {newPinCoords && (
+        <Marker position={[newPinCoords.lat, newPinCoords.lng]} icon={customWifiIcon}>
+          <Popup>
+            <form onSubmit={handleFormSubmit} className={styles.form}>
+              <input
+                type="text"
+                placeholder="Name"
+                value={formState.name}
+                onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                required
+              />
+              <textarea
+                placeholder="Description"
+                value={formState.description}
+                onChange={(e) => setFormState({ ...formState, description: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="SSID"
+                value={formState.ssid}
+                onChange={(e) => setFormState({ ...formState, ssid: e.target.value })}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Password"
+                value={formState.password}
+                onChange={(e) => setFormState({ ...formState, password: e.target.value })}
+                required
+              />
+              <input
+                type="number"
+                placeholder="Price (SOL)"
+                value={formState.price}
+                onChange={(e) => setFormState({ ...formState, price: e.target.value })}
+                required
+              />
+              <button type="submit">Add Wi-Fi</button>
+            </form>
+          </Popup>
+        </Marker>
+      )}
+    </MapContainer>
+  </div>
+);
 
-  );
 }
