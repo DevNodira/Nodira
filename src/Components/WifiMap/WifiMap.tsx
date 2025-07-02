@@ -47,6 +47,7 @@ L.Icon.Default.mergeOptions({
 
 function LocateButton({ onLocate }: { onLocate: (lat: number, lng: number) => void }) {
   const map = useMap();
+  
 
   const handleClick = () => {
     if (!navigator.geolocation) {
@@ -87,11 +88,26 @@ export default function WifiMap({showOnlyUnlocked }: WifiMapProps) {
   const [userLocation, setUserLocation] = useState<[number, number] | undefined>();
   const [unlockedPins, setUnlockedPins] = useState<number[]>([]);
   const mapRef = useRef<any>(null);
+  const defaultCenter: [number, number] = [50.4501, 30.5234];
 
 
   useEffect(() => {
     const stored = localStorage.getItem('unlockedPins');
     if (stored) setUnlockedPins(JSON.parse(stored));
+  }, []);
+
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setUserLocation([latitude, longitude]);
+      },
+      (err) => {
+        console.warn('Could not get user location, defaulting to Kyiv', err);
+      }
+    );
   }, []);
 
   const saveUnlocked = (arr: number[]) => {
@@ -188,7 +204,7 @@ export default function WifiMap({showOnlyUnlocked }: WifiMapProps) {
   return (
   <div className={styles.mapWrapper}>
     <MapContainer
-      center={[51.505, -0.09]}
+      center={userLocation || defaultCenter}
       zoom={15}
       className={styles.map}
       ref={mapRef}
